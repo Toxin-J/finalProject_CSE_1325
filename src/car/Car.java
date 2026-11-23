@@ -40,5 +40,34 @@ public class Car {
 	public VehicleStatus getStatus() {
 		return status;
 	}
+	
+	public void setMake(Make aMake) {
+		this.make = aMake;
+	}
+	
+	public void setType(Type aType) {
+		this.type = aType;
+	}
+	
+	public void setYear(int aYear) {
+		this.year = aYear;
+	}
+	
+	public void setPrice(double aPrice) {
+		this.price = aPrice;
+	}
+	
+	public void setMileage(int aMileage) {
+		this.mileage = aMileage;
+	}
+	
+	public void setStatus(VehicleStatus aStatus) {
+		this.status = aStatus;
+	}
+	
+	public String toString() {
+		return year + " " + make + " " + type + " | $" + price
+		         + " | " + mileage + " mi | " + status;
+	}
 
 }
