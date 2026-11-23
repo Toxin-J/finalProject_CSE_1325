@@ -1,8 +1,17 @@
 package car;
 
 public enum Type {
-	SUDAN,
+	SEDAN,
 	SUV,
 	TRUCK,
-	VAN
+	VAN,
+	COUPE,
+	WAGON,
+	MINIVAN,
+	ROADSTER,
+	HATCHBACK,
+	MUSCLE,
+	LUXURY,
+	SPORTS
+	
 }
