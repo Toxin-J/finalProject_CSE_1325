@@ -40,3 +40,4 @@ public enum Make {
 	MCLAREN,
 	ROLLSROYCE,
 	BUGATTI
+}
