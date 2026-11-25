@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import customer.Customer;
 
 public class CarInfoManager {
-	// Use an ArrayList for this, it's way faster LOL
 	private ArrayList<Car> cars;
 	private ArrayList<Customer> customers;
 	
@@ -32,35 +31,33 @@ public class CarInfoManager {
 		System.out.println(aCar);
 	}
 
-	/*
-	 public ArrayList<Car> filterCar() {
-		
+	// When working on UI: Consider removing Double from method parameters if the UI filter doesn't actually include it
+	public ArrayList<Car> filterCar(Make aMake, Type aType, VehicleStatus aStatus, double aPrice, int aYear) {
+		ArrayList<Car> results = new ArrayList<>();
+		for (Car c: cars) {
+			if (aMake != null && c.getMake() != aMake) {
+				continue;
+			}
+			if (aType != null && c.getType() != aType) {
+				continue;
+			}
+			if (aStatus != null && c.getStatus() != aStatus) {
+				continue;
+			}
+			if (c.getPrice() != aPrice) {
+				continue;
+			}
+			if (c.getYear() != aYear) {
+				continue;
+			}
+		}
+		return results;
 	}
-	
-	*/
 	
 	public void addCustomer(Customer aCustomer) {
 		if (aCustomer != null) {
 			customers.add(aCustomer);
 		}
-	}
-	
-	public boolean assignCarToCustomer(Car car, Customer customer) {
-		if (!cars.contains(car) || !customers.contains(customer) ) {
-			return false;
-		}
-		
-		if (car.getStatus() != VehicleStatus.AVAILABLE) {
-			return false;
-		}
-		
-		/*
-		 Missing operation here; car is not being assigned to any customer yet
-		 Worth considering adding an ArrayList<Cars> to the customer class to track cars belonging to customers?
-		*/
-		
-		car.setStatus(VehicleStatus.SOLD);
-		return true;
 	}
 	
 }
