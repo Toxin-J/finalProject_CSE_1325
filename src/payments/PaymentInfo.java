@@ -1,1 +1,1 @@
-package PaymentInfo;
+package payments;
