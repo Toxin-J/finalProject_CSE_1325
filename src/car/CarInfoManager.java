@@ -3,10 +3,12 @@ package car;
 import java.util.ArrayList;
 
 import customer.Customer;
+import customer.PurchaseType;
 
 public class CarInfoManager {
-	private ArrayList<Car> cars;
-	private ArrayList<Customer> customers;
+	// GUI fix: the lists were never created, so addCar/addCustomer threw a NullPointerException
+	private ArrayList<Car> cars = new ArrayList<>();
+	private ArrayList<Customer> customers = new ArrayList<>();
 	
 	public void addCar(Car aCar) {
 		if (aCar != null) {
@@ -31,7 +33,7 @@ public class CarInfoManager {
 		System.out.println(aCar);
 	}
 
-	// When working on UI: Consider removing Double from method parameters if the UI filter doesn't actually include it
+	// GUI fix: matching cars are now added to results, and a price or year of -1 means "any"
 	public ArrayList<Car> filterCar(Make aMake, Type aType, VehicleStatus aStatus, double aPrice, int aYear) {
 		ArrayList<Car> results = new ArrayList<>();
 		for (Car c: cars) {
@@ -44,14 +46,42 @@ public class CarInfoManager {
 			if (aStatus != null && c.getStatus() != aStatus) {
 				continue;
 			}
-			if (c.getPrice() != aPrice) {
+			if (aPrice != -1 && c.getPrice() != aPrice) {
 				continue;
 			}
-			if (c.getYear() != aYear) {
+			if (aYear != -1 && c.getYear() != aYear) {
 				continue;
+			}
+			results.add(c);
+		}
+		return results;
+	}
+
+	// GUI addition: same filter plus a maximum mileage (-1 means any mileage), for the GUI's mileage slider
+	public ArrayList<Car> filterCar(Make aMake, Type aType, VehicleStatus aStatus, double aPrice, int aYear, int aMaxMileage) {
+		ArrayList<Car> results = new ArrayList<>();
+		for (Car c : filterCar(aMake, aType, aStatus, aPrice, aYear)) {
+			if (aMaxMileage == -1 || c.getMileage() <= aMaxMileage) {
+				results.add(c);
 			}
 		}
 		return results;
+	}
+	
+	// GUI addition: FR-3 Record Vehicle Transaction. Returns false if the car isn't available.
+	// TODO: once PaymentInfo is written, create and store a PaymentInfo linking aCustomer and aCar here.
+	public boolean recordTransaction(Car aCar, Customer aCustomer, PurchaseType aType) {
+		if (aCar == null || aCustomer == null || aType == null || aCar.getStatus() != VehicleStatus.AVAILABLE) {
+			return false;
+		}
+		if (aType == PurchaseType.RENTAL) {
+			aCar.setStatus(VehicleStatus.RENTED);
+		} else if (aType == PurchaseType.LEASE) {
+			aCar.setStatus(VehicleStatus.LEASED);
+		} else {
+			aCar.setStatus(VehicleStatus.SOLD);
+		}
+		return true;
 	}
 	
 	public void addCustomer(Customer aCustomer) {
@@ -60,4 +90,17 @@ public class CarInfoManager {
 		}
 	}
 	
+	// GUI addition: FR-11 Remove Customer
+	public boolean removeCustomer(Customer aCustomer) {
+		return customers.remove(aCustomer);
+	}
+
+	// GUI addition: the GUI needs read access to show the fleet and customer list
+	public ArrayList<Car> getCars() {
+		return new ArrayList<>(cars);
+	}
+
+	public ArrayList<Customer> getCustomers() {
+		return new ArrayList<>(customers);
+	}	
 }

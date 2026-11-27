@@ -63,7 +63,7 @@ public class Car {
 	
 	public void setStatus(VehicleStatus aStatus) {
 		this.status = aStatus;
-	}
+	} 
 	
 	public String toString() {
 		return year + " " + make + " " + type + " | $" + price
