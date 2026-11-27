@@ -2,28 +2,26 @@ package customer;
 
 public class Customer {
 	private String name;
-	private int phoneNumber;
+	private String phoneNumber;
 	private String email;
 	
 	
-	public Customer(String name, int phoneNumber, String email) {
+	public Customer(String name, String phoneNumber, String email) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 	}
 	
-	public void updateContactInfo(int phoneNumber, String email) {
+	public void updateContactInfo(String phoneNumber, String email) {
 		this.phoneNumber = phoneNumber;
-		this.email = email;
-		
-		
+		this.email = email;	
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 	
